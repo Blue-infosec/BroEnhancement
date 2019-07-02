@@ -41,7 +41,6 @@ GET /_search
                 double logp;
                 double pent;
                 char currentChar;
-                int a=0;
                 double dlength=length;
                 def uniqueCs=Counts.keySet().toArray();
                 for (int i=0;i<uniqueCs.length;i++){
@@ -50,7 +49,6 @@ GET /_search
                 logp=Math.log(p)/Math.log(2);
                 pent=p*logp;
                 entropy=entropy-pent;
-                a++;
                 }
                 
                 

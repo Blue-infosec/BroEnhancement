@@ -1,10 +1,16 @@
-Adds a new field, ReqEntropy, to DNS and HTTP logs. It contains the shannon entropy of URIs in HTTP get strings, or in DNS subdomains
-It is a good field to search on for exfil through http gets and DNS channels
+Adds a new field, ReqEntropy, to DNS and HTTP logs. It contains the shannon entropy of URIs in HTTP get strings, 
+or in DNS subdomains. It is a good field to search on for exfil through http gets and DNS channels
+In the kibana dev console, or using curl or similar
+1. Post the CalcEntropy script
+2. Create BRO pipeline 
+3. Create DNSHTTP pipeline
 
-Post the CalcEntropy script
-Create BRO pipeline 
-Create DNSHTTP pipeline
+In your SO-master:
+
 Replace 9000_bro_config file with the new one in /etc/logstash/conf.d 
   adds a new line to send bro logs to the BRO pipeline
 Replace logstash-template.json
   adds a mapping for the new ReqEntropy field
+  Note: either wait a day for the new fields to be mapped when the log rolls over, or reindex with so-elastic-reindex 
+  https://github.com/Security-Onion-Solutions/security-onion/wiki/Re%E2%80%90Indexing
+  Refresh the mapping in management-indexpatterns-logstash* -> refresh button

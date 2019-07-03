@@ -1,0 +1,52 @@
+POST /_scripts/CalcEntropy
+{
+  "script" : {
+      "lang": "painless",
+      "source": """
+      def field=params.calcfield;
+      if (doc.containsKey(field)&&!doc[field].empty){
+      
+      def subdomainStr=doc[field].value;
+      def length=subdomainStr.length();
+      
+      char[] subdomainArr;
+      subdomainArr=subdomainStr.toCharArray();
+
+
+      Map Counts= new HashMap();
+      char c;
+      for (int i=0;i<length;i++)
+      {
+      c=subdomainArr[i];
+      if (Counts.containsKey(c)){
+        Counts.put(c, Counts.get(c)+1);
+      }
+      else {
+        Counts.put(c,1);
+      }
+      }
+      
+      double entropy=0;
+      double p;
+      double logp;
+      double pent;
+      char currentChar;
+      double dlength=length;
+      def uniqueCs=Counts.keySet().toArray();
+      for (int i=0;i<uniqueCs.length;i++){
+      currentChar=uniqueCs[i];
+      p=Counts.get(currentChar)/dlength;
+      logp=Math.log(p)/Math.log(2);
+      pent=p*logp;
+      entropy=entropy-pent;
+      }
+      
+      return entropy;
+      }
+      else{
+        return null;
+      }
+      """
+  }
+
+}

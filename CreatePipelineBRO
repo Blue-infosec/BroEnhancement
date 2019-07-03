@@ -1,0 +1,13 @@
+
+PUT _ingest/pipeline/BRO
+{
+    "description": "add an entropy field to DNS and HTTP logs",
+    "processors": [
+      {
+      "pipeline": {
+        "if": "ctx.event_type == 'BRO_DNS' || ctx.event_type == 'BRO_HTTP'",
+        "name": "DNSHTTP"
+      }
+      }
+    ]
+}

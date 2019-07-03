@@ -1,3 +1,6 @@
+Adds a new field, ReqEntropy, to DNS and HTTP logs. It contains the shannon entropy of URIs in HTTP get strings, or in DNS subdomains
+It is a good field to search on for exfil through http gets and DNS channels
+
 Post the CalcEntropy script
 Create BRO pipeline 
 Create DNSHTTP pipeline

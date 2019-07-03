@@ -1,1 +1,5 @@
-sudo docker exec -it [container id] /bin/bash
+Post the CalcEntropy script
+Create BRO pipeline 
+Create DNSHTTP pipeline
+Replace 9000_bro_config file with the new one in /etc/logstash/conf.d 
+  adds a new line to send bro logs to the BRO pipeline

@@ -1,0 +1,12 @@
+POST _ingest/pipeline/DNSHTTP/_simulate
+{
+  "docs" : [
+    { "_source": {"uri":"awdoiuflhasdoiufh"} },
+    { "_source": {"uri":"2334234"} },
+    { "_source": {"uri":"1111111"} },
+    { "_source": {"subdomain":"awdoiuflhasdoiufh"} },
+    { "_source": {"subdomain":""} },
+    { "_source": {"otherfield":"flajdhj"} }
+    // verify no field is created when subdomain and URI don't exist. See sample entropy calculations when they do
+  ]
+}

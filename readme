@@ -3,3 +3,5 @@ Create BRO pipeline
 Create DNSHTTP pipeline
 Replace 9000_bro_config file with the new one in /etc/logstash/conf.d 
   adds a new line to send bro logs to the BRO pipeline
+Replace logstash-template.json
+  adds a mapping for the new ReqEntropy field

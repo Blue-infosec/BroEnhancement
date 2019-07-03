@@ -6,7 +6,7 @@ In the kibana dev console, or using curl or similar
 3. Create DNSHTTP pipeline
 4. Test pipeline using the provided test script
 
-In your SO-master:
+In your elk master server:
 
 Replace 9000_bro_config file with the new one in /etc/logstash/conf.d 
   adds a new line to send bro logs to the BRO pipeline

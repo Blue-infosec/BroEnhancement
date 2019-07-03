@@ -4,9 +4,9 @@ POST /_scripts/CalcEntropy
       "lang": "painless",
       "source": """
       def field=params.calcfield;
-      if (doc.containsKey(field)&&!doc[field].empty){
+      if (!field.empty){
       
-      def subdomainStr=doc[field].value;
+      def subdomainStr=field;
       def length=subdomainStr.length();
       
       char[] subdomainArr;
@@ -41,10 +41,7 @@ POST /_scripts/CalcEntropy
       entropy=entropy-pent;
       }
       
-      return entropy;
-      }
-      else{
-        return null;
+      ctx.entropy=entropy;
       }
       """
   }

@@ -1,12 +1,14 @@
-POST _ingest/pipeline/DNSHTTP/_simulate
+
+POST _ingest/pipeline/BRO/_simulate
 {
   "docs" : [
-    { "_source": {"uri":"awdoiuflhasdoiufh"} },
-    { "_source": {"uri":"2334234"} },
-    { "_source": {"uri":"1111111"} },
-    { "_source": {"subdomain":"awdoiuflhasdoiufh"} },
-    { "_source": {"subdomain":""} },
-    { "_source": {"otherfield":"flajdhj"} }
+    { "_source": {"uri":"awdoiuflhasdoiufh", "event_type":"bro_http"} },
+    { "_source": {"uri":"2334234", "event_type":"bro_http"} },
+    { "_source": {"uri":"1111111", "event_type":"bro_http"} },
+    { "_source": {"subdomain":"awdoiuflhasdoiufh", "event_type":"bro_dns"} },
+    { "_source": {"subdomain":"", "event_type":"bro_dns"} },
+        { "_source": {"subdomain":"asdfasd", "event_type":"bro_other"} },
+    { "_source": {"otherfield":"flajdhj", "event_type":"bro_http"} }
     // verify no field is created when subdomain and URI don't exist. See sample entropy calculations when they do
   ]
 }

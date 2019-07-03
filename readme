@@ -4,6 +4,7 @@ In the kibana dev console, or using curl or similar
 1. Post the CalcEntropy script
 2. Create BRO pipeline 
 3. Create DNSHTTP pipeline
+4. Test pipeline using the provided test script
 
 In your SO-master:
 

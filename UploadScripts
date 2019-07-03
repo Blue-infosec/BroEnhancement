@@ -3,45 +3,56 @@ POST /_scripts/CalcEntropy
   "script" : {
       "lang": "painless",
       "source": """
-      def field=params.calcfield;
-      if (!field.empty){
-      
-      def subdomainStr=field;
-      def length=subdomainStr.length();
-      
-      char[] subdomainArr;
-      subdomainArr=subdomainStr.toCharArray();
+      //if subdomain exists, calculate it's entropy. Else if uri exists, calculate its entropy. Else do nothing.
+      String subdomain=ctx.subdomain;
+      String uri=ctx.uri;
+      String fieldStr;
+      if (subdomain!=null){
+        fieldStr=subdomain;
+      }
+      else if (uri!=null){
+        fieldStr =uri;
+      }
+      if (fieldStr!=null){
+        def length=fieldStr.length();
+        
+        char[] fieldArr;
+        fieldArr=fieldStr.toCharArray();
+    
+        //genereate a hash map of unique characters in the string
+        Map Counts= new HashMap();
+        char c;
+        for (int i=0;i<length;i++)
+        {
+        c=fieldArr[i];
+        if (Counts.containsKey(c)){
+          Counts.put(c, Counts.get(c)+1);
+        }
+        else {
+          Counts.put(c,1);
+        }
+        }
+        
+        //calculate the shannon entropy (naive) based on observed frequency
+        
+        double entropy=0;
+        double p;
+        double logp;
+        double pent;
+        char currentChar;
+        double dlength=length;
+        def uniqueCs=Counts.keySet().toArray();
+        for (int i=0;i<uniqueCs.length;i++){
+          currentChar=uniqueCs[i];
+          p=Counts.get(currentChar)/dlength;
+          logp=Math.log(p)/Math.log(2);
+          pent=p*logp;
+          entropy=entropy-pent;
+        }
+        
+        //store the result in the new field ReqEntropy
+        ctx.ReqEntropy=entropy;
 
-
-      Map Counts= new HashMap();
-      char c;
-      for (int i=0;i<length;i++)
-      {
-      c=subdomainArr[i];
-      if (Counts.containsKey(c)){
-        Counts.put(c, Counts.get(c)+1);
-      }
-      else {
-        Counts.put(c,1);
-      }
-      }
-      
-      double entropy=0;
-      double p;
-      double logp;
-      double pent;
-      char currentChar;
-      double dlength=length;
-      def uniqueCs=Counts.keySet().toArray();
-      for (int i=0;i<uniqueCs.length;i++){
-      currentChar=uniqueCs[i];
-      p=Counts.get(currentChar)/dlength;
-      logp=Math.log(p)/Math.log(2);
-      pent=p*logp;
-      entropy=entropy-pent;
-      }
-      
-      ctx.entropy=entropy;
       }
       """
   }

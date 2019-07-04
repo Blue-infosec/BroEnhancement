@@ -27,9 +27,6 @@
         "TotalEntropy":{  
           "type":"double"
         },
-	"EntropyDifference":{  
-          "type":"double"
-        },
         "geoip":{  
           "dynamic":true,
           "properties":{  

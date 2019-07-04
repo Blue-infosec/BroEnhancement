@@ -18,13 +18,13 @@
         "@version":{  
           "type":"keyword"
         },
-        "ReqEntropy":{  
+        "NormalizedEntropy":{  
           "type":"double"
         },
-        "EntropyPerChar":{  
+        "SymbolEntropy":{  
           "type":"double"
         },
-        "CompressedEntropy":{  
+        "TotalEntropy":{  
           "type":"double"
         },
 	"EntropyDifference":{  

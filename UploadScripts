@@ -5,7 +5,7 @@ POST /_scripts/CalcEntropy
       "source": """
       //if subdomain exists, calculate it's entropy. Else if uri exists, calculate its entropy. Else do nothing.
       String fieldStr=ctx.CalcEntropy;
-      if (fieldStr!=null){
+      if (fieldStr!=null&&fieldStr!=""){
         def length=fieldStr.length();
         
         char[] fieldArr;
@@ -26,26 +26,31 @@ POST /_scripts/CalcEntropy
         }
         
         //calculate the shannon entropy (naive) based on observed frequency
-        
-        double entropy=0;
-        double p;
-        double logp;
-        double pent;
-        char currentChar;
         double dlength=length;
-        def uniqueCs=Counts.keySet().toArray();
+        double entropy=0;
         for (int i=0;i<length;i++){
-          currentChar=fieldArr[i];
-          p=Counts.get(currentChar)/dlength;
-          logp=Math.log(p)/Math.log(2);
-          pent=p*logp;
+          char currentChar=fieldArr[i];
+          double p=Counts.get(currentChar)/dlength;
+          double logp=Math.log(p)/Math.log(2);
+          double pent=p*logp;
           entropy=entropy-pent;
+        }
+        
+        double compression=0;
+        def uniqueCs=Counts.keySet().toArray();
+        for (int i=0;i<uniqueCs.length;i++){
+          char currentChar=uniqueCs[i];
+          double p=Counts.get(currentChar)/dlength;
+          double logp=Math.log(p)/Math.log(2);
+          double pent=p*logp;
+          compression=compression-pent;
         }
         
         //store the result in the new field ReqEntropy
         ctx.ReqEntropy=entropy;
         ctx.EntropyPerChar=entropy/length;
-        ctx.workinglength=length;
+        ctx.CompEntropy=compression;
+        ctx.outputtest=fieldStr;
       }
       """
   }

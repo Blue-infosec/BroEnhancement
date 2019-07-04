@@ -3,7 +3,7 @@ POST /_scripts/CalcEntropy
   "script" : {
       "lang": "painless",
       "source": """
-      //if subdomain exists, calculate it's entropy. Else if uri exists, calculate its entropy. Else do nothing.
+      //calculate the total entropy (information content), symbol entropy and normalized entropy (randomness essentially) of a field named calcentropy. To use this script, create that field with set and remove it after with remove.
       String fieldStr=ctx.CalcEntropy;
       if (fieldStr!=null&&fieldStr!=""){
         def length=fieldStr.length();
@@ -25,35 +25,32 @@ POST /_scripts/CalcEntropy
         }
         }
         
-        //calculate the shannon entropy of the message based on observed frequency
+        def uniqueCs=Counts.keySet().toArray();
         double dlength=length;
+        
+        //calculate the entropy of the symbol set. This is the average number of bits it would take to represent each symbol under optimal compression.
         double entropy=0;
-        for (int i=0;i<length;i++){
-          char currentChar=fieldArr[i];
+        for (int i=0;i<uniqueCs.length;i++){
+          char currentChar=uniqueCs[i];
           double p=Counts.get(currentChar)/dlength;
-          double logp=Math.log(p)/Math.log(2);
+          double logp=Math.log(p);
           double pent=p*logp;
           entropy=entropy-pent;
         }
         
-        //calculate the average bits per message symbol (e.g. how much information is in each possible character)
-        double compression=0;
-        def uniqueCs=Counts.keySet().toArray();
-        for (int i=0;i<uniqueCs.length;i++){
-          char currentChar=uniqueCs[i];
-          double p=Counts.get(currentChar)/dlength;
-          double logp=Math.log(p)/Math.log(2);
-          double pent=p*logp;
-          compression=compression-pent;
-        }
+        //calculate the normalized entropy of the symbolset
+        double normEntropy=entropy/Math.log(uniqueCs.length);
         
+        double CompressedBits=entropy*length;
         //store the result in new fields 
         //entropy of the field. High total entropy indicates large amount of data.
-        ctx.ReqEntropy=entropy;
-        //entropy per character in the field. High entropy per character indicates encoding.
-        ctx.EntropyPerChar=entropy/length; 
-        //entropy per symbol in field. High symbol entropy indicates compression.
-        ctx.AverageSymbolEntropy=compression;
+        ctx.TotalEntropy=entropy*length;
+
+        //average symbol entropy. Goes up with randomness (including set size). Measured in nats. High values indicate encoding.
+        ctx.SymbolEntropy=entropy;
+        //normalized entropy - randomness of character set, ignoring number of symbols. Measured in bits equivalent for a base the size of the symbol set. Values close to 1 indicate true random data (e.g. encryption/compression)
+        ctx.NormalizedEntropy=normEntropy;
+        ctx.testcount=uniqueCs.length;
       }
       """
   }

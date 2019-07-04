@@ -42,7 +42,6 @@ POST /_scripts/CalcEntropy
         //calculate the normalized entropy of the symbolset
         double normEntropy=entropy/Math.log(uniqueCs.length);
         
-        double CompressedBits=entropy*length;
         //store the result in new fields 
         //entropy of the field. High total entropy indicates large amount of data.
         ctx.TotalEntropy=entropy*length;

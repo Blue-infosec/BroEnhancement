@@ -24,7 +24,10 @@
         "EntropyPerChar":{  
           "type":"double"
         },
-        "AverageSymbolEntropy":{  
+        "CompressedEntropy":{  
+          "type":"double"
+        },
+	"EntropyDifference":{  
           "type":"double"
         },
         "geoip":{  

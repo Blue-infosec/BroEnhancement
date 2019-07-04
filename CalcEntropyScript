@@ -48,12 +48,12 @@ POST /_scripts/CalcEntropy
         }
         
         //store the result in new fields 
-        //entropy of the field
+        //entropy of the field. High total entropy indicates large amount of data.
         ctx.ReqEntropy=entropy;
-        //entropy per character in the field
+        //entropy per character in the field. High entropy per character indicates encoding.
         ctx.EntropyPerChar=entropy/length; 
-        //entropy per symbol in field
-        ctx.CompEntropy=compression;
+        //entropy per symbol in field. High symbol entropy indicates compression.
+        ctx.AverageSymbolEntropy=compression;
       }
       """
   }

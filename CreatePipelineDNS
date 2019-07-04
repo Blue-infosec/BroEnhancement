@@ -10,7 +10,7 @@ PUT _ingest/pipeline/DNS
         "script" : {
           "id" : "CalcEntropy"
         },
-        "trim" :{
+        "remove" :{
           "field":"CalcEntropy"
         }
       }

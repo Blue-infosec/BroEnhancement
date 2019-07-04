@@ -34,8 +34,8 @@ POST /_scripts/CalcEntropy
         char currentChar;
         double dlength=length;
         def uniqueCs=Counts.keySet().toArray();
-        for (int i=0;i<uniqueCs.length;i++){
-          currentChar=uniqueCs[i];
+        for (int i=0;i<length;i++){
+          currentChar=fieldArr[i];
           p=Counts.get(currentChar)/dlength;
           logp=Math.log(p)/Math.log(2);
           pent=p*logp;
@@ -45,7 +45,7 @@ POST /_scripts/CalcEntropy
         //store the result in the new field ReqEntropy
         ctx.ReqEntropy=entropy;
         ctx.EntropyPerChar=entropy/length;
-
+        ctx.workinglength=length;
       }
       """
   }

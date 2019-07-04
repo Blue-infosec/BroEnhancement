@@ -25,7 +25,7 @@ POST /_scripts/CalcEntropy
         }
         }
         
-        //calculate the shannon entropy (naive) based on observed frequency
+        //calculate the shannon entropy of the message based on observed frequency
         double dlength=length;
         double entropy=0;
         for (int i=0;i<length;i++){
@@ -36,6 +36,7 @@ POST /_scripts/CalcEntropy
           entropy=entropy-pent;
         }
         
+        //calculate the average bits per message symbol (e.g. how much information is in each possible character)
         double compression=0;
         def uniqueCs=Counts.keySet().toArray();
         for (int i=0;i<uniqueCs.length;i++){
@@ -46,11 +47,13 @@ POST /_scripts/CalcEntropy
           compression=compression-pent;
         }
         
-        //store the result in the new field ReqEntropy
+        //store the result in new fields 
+        //entropy of the field
         ctx.ReqEntropy=entropy;
-        ctx.EntropyPerChar=entropy/length;
+        //entropy per character in the field
+        ctx.EntropyPerChar=entropy/length; 
+        //entropy per symbol in field
         ctx.CompEntropy=compression;
-        ctx.outputtest=fieldStr;
       }
       """
   }

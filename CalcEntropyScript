@@ -3,7 +3,8 @@ POST /_scripts/CalcEntropy
   "script" : {
       "lang": "painless",
       "source": """
-      //calculate the total entropy (information content), symbol entropy and normalized entropy (randomness essentially) of a field named calcentropy. To use this script, create that field with set and remove it after with remove.
+      /*calculate the total entropy (information content), symbol entropy and normalized entropy (randomness essentially) of a 
+      field named calcentropy. To use this script, create that field with set and remove it after with remove. */
       String fieldStr=ctx.CalcEntropy;
       if (fieldStr!=null&&fieldStr!=""){
         def length=fieldStr.length();

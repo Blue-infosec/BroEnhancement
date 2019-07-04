@@ -1,19 +1,23 @@
-
-PUT _ingest/pipeline/DNS
+PUT _ingest/pipeline/HTTP
 {
-    "description" : "add an entropy field to HTTP logs",
+    "description" : "add an entropy field to DNS logs",
     "processors" : [
       {
         "set" :{
           "field": "CalcEntropy",
           "value": "{{uri}}"
-        },
+        }
+      },
+      {
         "script" : {
           "id" : "CalcEntropy"
-        },
+        }
+      },
+      {
         "trim" :{
           "field":"CalcEntropy"
         }
       }
+      
     ]
 }

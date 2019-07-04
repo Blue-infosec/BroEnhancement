@@ -21,6 +21,12 @@
         "ReqEntropy":{  
           "type":"double"
         },
+        "EntropyPerChar":{  
+          "type":"double"
+        },
+        "AverageSymbolEntropy":{  
+          "type":"double"
+        },
         "geoip":{  
           "dynamic":true,
           "properties":{  

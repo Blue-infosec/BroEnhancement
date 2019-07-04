@@ -4,15 +4,7 @@ POST /_scripts/CalcEntropy
       "lang": "painless",
       "source": """
       //if subdomain exists, calculate it's entropy. Else if uri exists, calculate its entropy. Else do nothing.
-      String subdomain=ctx.subdomain;
-      String uri=ctx.uri;
-      String fieldStr;
-      if (subdomain!=null){
-        fieldStr=subdomain;
-      }
-      else if (uri!=null){
-        fieldStr =uri;
-      }
+      String fieldStr=ctx.CalcEntropy;
       if (fieldStr!=null){
         def length=fieldStr.length();
         
@@ -52,6 +44,7 @@ POST /_scripts/CalcEntropy
         
         //store the result in the new field ReqEntropy
         ctx.ReqEntropy=entropy;
+        ctx.EntropyPerChar=entropy/length;
 
       }
       """

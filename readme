@@ -9,9 +9,17 @@ In the kibana dev console, or using curl or similar
 In your elk master server:
 
 Replace 9000_bro_config file with the new one in /etc/logstash/conf.d 
-  adds a new line to send bro logs to the BRO pipeline
+  adds a new line to send bro logs to the BRO pipeline in ELK
 Replace logstash-template.json
-  adds a mapping for the new ReqEntropy field
+  adds a mappings for the new fields TotalEntropy, NormalizedEntropy and SymbolEntropy as doubles
   Note: either wait a day for the new fields to be mapped when the log rolls over, or reindex with so-elastic-reindex 
   https://github.com/Security-Onion-Solutions/security-onion/wiki/Re%E2%80%90Indexing
   Refresh the mapping in management-indexpatterns-logstash* -> refresh button
+
+Totalentropy - can be interpreted as the information content of the field (URI or subdomain in this case). High values indicate information
+  is being transmitted in the field (abnormal for get strings and subdomains)
+SymbolEntropy - The average information contained in every symbol of the field. High values indicate a large random symbol set 
+  (e.g. encoded/encrypted). Low values indicate small/less random sets.
+NormalizedEntropy - the symbol entropy normalized by the size of the symbol set. Measure of randomness of the set, removes set size from
+ symbol entropy. 1 is a flat distribution (indication of compression/encryption), the more peaked the distribution is the closer it gets 
+ to 0. 

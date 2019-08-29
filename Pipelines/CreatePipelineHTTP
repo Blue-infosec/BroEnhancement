@@ -10,7 +10,7 @@ PUT _ingest/pipeline/HTTP
         "script" : {
           "id" : "CalcEntropy"
         },
-        "trim" :{
+        "remove" :{
           "field":"CalcEntropy"
         }
       }

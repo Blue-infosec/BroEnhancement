@@ -1,12 +1,17 @@
-PUT _ingest/pipeline/HTTP
+PUT _ingest/pipeline/SMB
 {
-    "description" : "add an entropy field to HTTP logs",
+    "description" : "add an entropy field to SMB logs",
     "processors" : [
       {
         "set" :{
           "field": "CalcEntropy",
           "value": "{{name}}"
         },
+        "script" : {
+          "id" : "TrimSMBPath"
+        }
+      },
+      {
         "script" : {
           "id" : "CalcEntropy"
         },

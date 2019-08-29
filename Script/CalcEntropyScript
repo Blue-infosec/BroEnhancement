@@ -50,7 +50,6 @@ POST /_scripts/CalcEntropy
         ctx.SymbolEntropy=entropy;
         //normalized entropy - randomness of character set, ignoring number of symbols. Measured in bits equivalent for a base the size of the symbol set. Values close to 1 indicate true random data (e.g. encryption/compression)
         ctx.NormalizedEntropy=normEntropy;
-        ctx.testcount=uniqueCs.length;
       }
       """
   }

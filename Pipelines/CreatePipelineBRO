@@ -1,4 +1,3 @@
-
 PUT _ingest/pipeline/BRO
 {
     "description": "add an entropy field to DNS and HTTP logs",
@@ -13,6 +12,12 @@ PUT _ingest/pipeline/BRO
         "pipeline": {
           "if": "ctx.event_type == 'bro_http'",
           "name": "HTTP"
+        }
+      },
+      {
+        "pipeline": {
+          "if": "ctx.event_type == 'bro_smb_files'",
+          "name": "SMB"
         }
       }
     ]

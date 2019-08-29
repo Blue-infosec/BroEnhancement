@@ -4,10 +4,11 @@ POST _ingest/pipeline/BRO/_simulate
   "docs" : [
     { "_source": {"uri":"the quick brown fox jumped over the lazy dog. English text should have a high symbol entropy (~about 65 characters so a large set) but relatively low normalized entropy (we don't use them equally).", "event_type":"bro_http"} },
     { "_source": {"uri":"10", "event_type":"bro_http"} },
+    { "_source": {"name":"test/output/file.conf", "event_type":"bro_http"} },
     { "_source": {"uri":"101010", "event_type":"bro_http"} },
     {"_source":{"uri":"12345","event_type":"bro_http"}}, 
     { "_source": {"subdomain":"111111111111110", "event_type":"bro_dns"} },
-    { "_source": {"subdomain":"112345678", "event_type":"bro_dns"} }
+    { "_source": {"subdomain":"112345678", "event_type":"bro_dns"} },
     { "_source": {"subdomain":"", "event_type":"bro_dns"} },
         { "_source": {"subdomain":"asdfasd", "event_type":"bro_other"} },
     { "_source": {"otherfield":"flajdhj", "event_type":"bro_http"} }

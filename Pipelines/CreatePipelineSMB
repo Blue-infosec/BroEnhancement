@@ -1,0 +1,19 @@
+PUT _ingest/pipeline/HTTP
+{
+    "description" : "add an entropy field to HTTP logs",
+    "processors" : [
+      {
+        "set" :{
+          "field": "CalcEntropy",
+          "value": "{{name}}"
+        },
+        "script" : {
+          "id" : "CalcEntropy"
+        },
+        "remove" :{
+          "field":"CalcEntropy"
+        }
+      }
+      
+    ]
+}

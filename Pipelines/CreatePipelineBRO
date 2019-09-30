@@ -17,7 +17,7 @@ PUT _ingest/pipeline/BRO
       {
          "pipeline": {
           "if": "ctx.event_type == 'bro_conn'",
-          "name": "BRO"
+          "name": "CONN"
         }
       },
       {

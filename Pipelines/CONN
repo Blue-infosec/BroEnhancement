@@ -1,0 +1,12 @@
+PUT _ingest/pipeline/CONN
+{
+    "description" : "add producer consumer ratio to bro conn logs",
+    "processors" : [
+      {
+        "script" : {
+          "id" : "ProducerConsumerRatio"
+        }
+      }
+      
+    ]
+}

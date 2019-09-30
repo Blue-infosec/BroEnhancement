@@ -14,6 +14,11 @@ PUT _ingest/pipeline/BRO
           "name": "HTTP"
         }
       },
+         "pipeline": {
+          "if": "ctx.event_type == 'bro_conn'",
+          "name": "BRO"
+        }
+      },
       {
         "pipeline": {
           "if": "ctx.event_type == 'bro_smb_files'",

@@ -1,0 +1,21 @@
+POST /_scripts/ProducerConsumerRatio
+{
+  "script" : {
+      "lang": "painless",
+      "source": """
+      /*Calculate producer consumer ratio from original and respond bytes in bro conn logs. */
+      float SourceBytes=ctx.original_bytes;
+      float RespondBytes=ctx.respond_bytes;
+      float TotalBytes=ctx.total_bytes;
+      float PCR=0;
+      if (TotalBytes!=0){
+          PCR=(SourceBytes-RespondBytes)/TotalBytes;
+        }
+
+        ctx.ProducerConsumerRatio=PCR;
+
+      }
+      """
+  }
+
+}

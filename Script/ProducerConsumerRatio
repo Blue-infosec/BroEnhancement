@@ -13,8 +13,6 @@ POST /_scripts/ProducerConsumerRatio
         }
 
         ctx.ProducerConsumerRatio=PCR;
-
-      }
       """
   }
 
